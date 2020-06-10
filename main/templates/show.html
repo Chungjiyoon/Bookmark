@@ -1,0 +1,113 @@
+<style>
+    body{
+        background-color: #FDDFF4;
+    }
+
+    .button{
+        border-radius: 12px;
+        background-color: white;
+        color: black;
+        border: 1.5px solid gray;
+        padding: 10px;
+    }
+    .card{
+        width: 50%;
+        height: 90%;
+        
+        /* radius 는 각을 둥글게 만들어줌 */
+        border-radius: 15px;
+        background-color: white;
+        
+        /* 그림자만들기 */
+        box-shadow: 10px 10px 5px grey;
+        
+        /* 위 왼 아래 오  */
+        margin: 10 auto 10 auto;
+        /* 경계선과 컨텐츠 사이의 거리 */
+        padding: 30px;
+    
+
+    }
+
+    .card1{
+        width: 50%;
+        height: 10%;
+        
+        /* radius 는 각을 둥글게 만들어줌 */
+        border-radius: 15px;
+        background-color: white;
+        
+        /* 그림자만들기 */
+        box-shadow: 10px 10px 5px grey;
+        
+        /* 위 왼 아래 오  */
+        margin: 10 auto 10 auto;
+        /* 경계선과 컨텐츠 사이의 거리 */
+        padding: 30px;
+    }
+
+    .card2{
+        width: 80%;
+        height: 10%;
+        
+        /* radius 는 각을 둥글게 만들어줌 */
+        border-radius: 15px;
+        background-color: #FFFFA1;
+        
+        /* 그림자만들기 */
+        box-shadow: 10px 10px 5px grey;
+        
+        /* 위 왼 아래 오  */
+        margin: 10 auto 10 auto;
+        /* 경계선과 컨텐츠 사이의 거리 */
+        padding: 30px;
+    }
+    
+</style>
+
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class='card1'>
+    <center>
+    <header>BOOK-MARK</header>
+    <br>
+    <div>
+        <button class='button'><a href="{%url 'main:new'%}">CREATE</a></button>
+    </div>
+    </center>
+</div>
+
+
+<div class='card'>
+    {%if bookmarks %}
+
+    {% for bookmark in bookmarks %}
+    <div class='card2'>
+        <p> {{bookmark.site_name}}</p>
+        <p> {{bookmark.site_url}}</p>
+        <div>
+            <a href="{% url 'main:edit' bookmark.id %}">edit</a>
+            <form action="{%url 'main:delete' bookmark.id %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="delete">
+            </form>
+        </div>
+
+    </div>
+    {% endfor %}
+
+    {% else %}
+
+    <div>
+        <p>
+            북마크가 비어있숩니다아아어앙
+        </p>
+    </div>
+
+    {% endif %}
+    
+</div>
+{% endblock %}
